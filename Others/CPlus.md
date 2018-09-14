@@ -22,6 +22,7 @@ cout：C++编程语言互换流中的标准输出流，需要iostream支持。�
 [ctime 时间和日期](http://www.runoob.com/cplusplus/cpp-date-time.html)
 [fstream 文件和流](http://www.runoob.com/cplusplus/cpp-files-streams.html)  
 [csignal 信号处理](http://www.runoob.com/cplusplus/cpp-signal-handling.html)
+[pthread 多线程](http://www.runoob.com/cplusplus/cpp-multithreading.html)
 
 ******
 
@@ -1187,8 +1188,254 @@ int main ()
 }
 ```  
 
-## 多线程 
-线程安全  
+## 多线程  
+
+```
+#include <iostream>
+// 必须的头文件
+#include <pthread.h>
+ 
+using namespace std;
+ 
+#define NUM_THREADS 5
+ 
+// 线程的运行函数
+void* say_hello(void* args)
+{
+    cout << "Hello Runoob！" << endl;
+    return 0;
+}
+ 
+int main()
+{
+    // 定义线程的 id 变量，多个变量使用数组
+    pthread_t tids[NUM_THREADS];
+    for(int i = 0; i < NUM_THREADS; ++i)
+    {
+        //参数依次是：创建的线程id，线程参数，调用的函数，传入的函数参数
+        int ret = pthread_create(&tids[i], NULL, say_hello, NULL);
+        if (ret != 0)
+        {
+           cout << "pthread_create error: error_code=" << ret << endl;
+        }
+    }
+    //等各个线程退出后，进程才结束，否则进程强制结束了，线程可能还没反应过来；
+    pthread_exit(NULL);
+}
+```  
+
+**传参**  
+
+```
+//文件名：test.cpp
+ 
+#include <iostream>
+#include <cstdlib>
+#include <pthread.h>
+ 
+using namespace std;
+ 
+#define NUM_THREADS     5
+ 
+void *PrintHello(void *threadid)
+{  
+   // 对传入的参数进行强制类型转换，由无类型指针变为整形数指针，然后再读取
+   int tid = *((int*)threadid);
+   cout << "Hello Runoob! 线程 ID, " << tid << endl;
+   pthread_exit(NULL);
+}
+ 
+int main ()
+{
+   pthread_t threads[NUM_THREADS];
+   int indexes[NUM_THREADS];// 用数组来保存i的值
+   int rc;
+   int i;
+   for( i=0; i < NUM_THREADS; i++ ){      
+      cout << "main() : 创建线程, " << i << endl;
+      indexes[i] = i; //先保存i的值
+      // 传入的时候必须强制转换为void* 类型，即无类型指针        
+      rc = pthread_create(&threads[i], NULL, 
+                          PrintHello, (void *)&(indexes[i]));
+      if (rc){
+         cout << "Error:无法创建线程," << rc << endl;
+         exit(-1);
+      }
+   }
+   pthread_exit(NULL);
+}
+```  
+
+
+**向线程传递参数**  
+这个实例演示了如何通过结构传递多个参数。您可以在线程回调中传递任意的数据类型，因为它指向 void
+
+```
+#include <iostream>
+#include <cstdlib>
+#include <pthread.h>
+ 
+using namespace std;
+ 
+#define NUM_THREADS     5
+ 
+struct thread_data{
+   int  thread_id;
+   char *message;
+};
+ 
+void *PrintHello(void *threadarg)
+{
+   struct thread_data *my_data;
+ 
+   my_data = (struct thread_data *) threadarg;
+ 
+   cout << "Thread ID : " << my_data->thread_id ;
+   cout << " Message : " << my_data->message << endl;
+ 
+   pthread_exit(NULL);
+}
+ 
+int main ()
+{
+   pthread_t threads[NUM_THREADS];
+   struct thread_data td[NUM_THREADS];
+   int rc;
+   int i;
+ 
+   for( i=0; i < NUM_THREADS; i++ ){
+      cout <<"main() : creating thread, " << i << endl;
+      td[i].thread_id = i;
+      td[i].message = (char*)"This is message";
+      rc = pthread_create(&threads[i], NULL,
+                          PrintHello, (void *)&td[i]);
+      if (rc){
+         cout << "Error:unable to create thread," << rc << endl;
+         exit(-1);
+      }
+   }
+   pthread_exit(NULL);
+}
+```  
+
+
+**连接和分离线程**  
+*pthread_join (threadid, status)*
+*pthread_detach (threadid)*   
+**pthread_join()** 子程序阻碍调用程序，直到指定的 threadid 线程终止为止。当创建一个线程时，它的某个属性会定义它是否是可连接的（joinable）或可分离的（detached）。**只有创建时定义为可连接的线程才可以被连接。如果线程创建时被定义为可分离的，则它永远也不能被连接。**  
+
+```
+#include <iostream>
+#include <cstdlib>
+#include <pthread.h>
+#include <unistd.h>
+ 
+using namespace std;
+ 
+#define NUM_THREADS     5
+ 
+void *wait(void *t)
+{
+   int i;
+   long tid;
+ 
+   tid = (long)t;
+ 
+   sleep(1);
+   cout << "Sleeping in thread " << endl;
+   cout << "Thread with id : " << tid << "  ...exiting " << endl;
+   pthread_exit(NULL);
+}
+ 
+int main ()
+{
+   int rc;
+   int i;
+   pthread_t threads[NUM_THREADS];
+   pthread_attr_t attr;
+   void *status;
+ 
+   // 初始化并设置线程为可连接的（joinable）
+   pthread_attr_init(&attr);
+   pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+ 
+   for( i=0; i < NUM_THREADS; i++ ){
+      cout << "main() : creating thread, " << i << endl;
+      rc = pthread_create(&threads[i], NULL, wait, (void *)&i );
+      if (rc){
+         cout << "Error:unable to create thread," << rc << endl;
+         exit(-1);
+      }
+   }
+ 
+   // 删除属性，并等待其他线程
+   pthread_attr_destroy(&attr);
+   for( i=0; i < NUM_THREADS; i++ ){
+      rc = pthread_join(threads[i], &status);
+      if (rc){
+         cout << "Error:unable to join," << rc << endl;
+         exit(-1);
+      }
+      cout << "Main: completed thread id :" << i ;
+      cout << "  exiting with status :" << status << endl;
+   }
+ 
+   cout << "Main: program exiting." << endl;
+   pthread_exit(NULL);
+}
+```
+
+***c++ 11 之后有了标准的线程库 thread***
+
+```
+#include <iostream>
+
+#include <thread>
+
+std::thread::id main_thread_id = std::this_thread::get_id();
+
+void hello()  
+{
+    std::cout << "Hello Concurrent World\n";
+    if (main_thread_id == std::this_thread::get_id())
+        std::cout << "This is the main thread.\n";
+    else
+        std::cout << "This is not the main thread.\n";
+}
+
+void pause_thread(int n) {
+    std::this_thread::sleep_for(std::chrono::seconds(n));
+    std::cout << "pause of " << n << " seconds ended\n";
+}
+
+int main() {
+    std::thread t(hello);
+    std::cout << t.hardware_concurrency() << std::endl;//可以并发执行多少个(不准确)
+    std::cout << "native_handle " << t.native_handle() << std::endl;//可以并发执行多少个(不准确)
+    t.join();
+    std::thread a(hello);
+    a.detach();
+    std::thread threads[5];                         // 默认构造线程
+
+    std::cout << "Spawning 5 threads...\n";
+    for (int i = 0; i < 5; ++i)
+        threads[i] = std::thread(pause_thread, i + 1);   // move-assign threads
+    std::cout << "Done spawning threads. Now waiting for them to join:\n";
+    for (auto &thread : threads)
+        thread.join();
+    std::cout << "All threads joined!\n";
+}
+```
+
+******  
+
+##线程安全 锁  
+
+**互斥锁**  
+
+**原子性**
+
+******
 
 ## 网络编程 
 http get post
