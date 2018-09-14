@@ -6,4 +6,8 @@
 
 [Unity Shader中的ComputeScreenPos函数](https://www.jianshu.com/p/df878a386bec)  
 
+******  
+
+## _ScreenParams  
+屏幕参数：x = 屏幕宽度，y = 屏幕高度，z =  1 + 1.0/屏幕宽度, w = 1 + 1.0/height屏幕高度(指像素数)
 ******
