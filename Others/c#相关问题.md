@@ -1,10 +1,10 @@
 ## HashTable、 Dictionary、ConcurrentDictionary区别
 
-1. *Dictionary* 支持泛型 
-    *HashTable*不支持泛型，非引用类型有装箱拆箱操作，影响效率
+1. *Dictionary* 支持泛型 
+    *HashTable*不支持泛型，非引用类型有装箱拆箱操作，影响效率
 2. *ConcurrentDictionary* 在 *Dictionary* 加入了线程安全，Dictionary是非线程安全的类型，操作的时候需要对其进行线程安全处理，最简单的方式就是加锁(lock)。 
 
-3. .Net4.0中 *ConcurrentDictionary* 是线程安全的字典。
+3. .Net4.0中 *ConcurrentDictionary* 是线程安全的字典。
 
 + 总结
     大数据插入*Dictionary*花费时间最少
