@@ -2,5 +2,6 @@
 
 ## 第一排42481255156，第二排显示数字出现的次数  
 [题目](http://lg-asus.iteye.com/blog/1910112)
+[题目2](https://blog.csdn.net/u012333003/article/details/24627495)
 
 ## 二叉树遍历 递归和非递归
