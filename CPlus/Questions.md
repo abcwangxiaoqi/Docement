@@ -98,6 +98,23 @@ char _chr = *_ch; //*_ch接指针  _ch为指针地址
 
 ******  
 
+## 智能指针 
+
+**auto_ptr** 
+
+**unique_ptr**
+
+**share_ptr**：基于“引用计数”模型实现，多个shared_ptr可指向同一个动态对象，并维护了一个共享的引用计数器，记录了引用同一对象的shared_ptr实例的数量。当最后一个指向动态对象的shared_ptr销毁时，会自动销毁其所指对象(通过delete操作符)。
+
+shared_ptr多个指针指向相同的对象。shared_ptr使用引用计数，每一个shared_ptr的拷贝都指向相同的内存。每使用他一次，内部的引用计数加1，每析构一次，内部的引用计数减1，减为0时，自动删除所指向的堆内存。**shared_ptr内部的引用计数是线程安全的**，但是对象的读取需要加锁。
+
+**weak_ptr**：用于解决“引用计数”模型循环依赖问题，weak_ptr指向一个对象，并不增减该对象的引用计数器
+
+[C++11学习之share_ptr和weak_ptr](https://www.cnblogs.com/wangshaowei/p/9374389.html) 
+[C++11中智能指针的原理、使用、实现](https://www.cnblogs.com/wxquare/p/4759020.html)
+
+******
+
 ## lua gc 
 
 [Lua GC 的源码剖析 (1)](https://blog.codingnow.com/2011/03/lua_gc_1.html)
