@@ -98,7 +98,7 @@ char _chr = *_ch; //*_ch接指针  _ch为指针地址
 
 ******  
 
-## 智能指针 
+## 智能指针 
 
 **auto_ptr** 
 
@@ -115,32 +115,10 @@ shared_ptr多个指针指向相同的对象。shared_ptr使用引用计数，每
 
 ******
 
-## lua gc 
 
-[Lua GC 的源码剖析 (1)](https://blog.codingnow.com/2011/03/lua_gc_1.html)
-[Lua GC 的源码剖析 (2)](https://blog.codingnow.com/2011/03/lua_gc_2.html) 
-[Lua GC 的源码剖析 (3)](https://blog.codingnow.com/2011/03/lua_gc_3.html) 
-[Lua GC 的源码剖析 (4)](https://blog.codingnow.com/2011/03/lua_gc_4.html)
-[Lua GC 的源码剖析 (5)](https://blog.codingnow.com/2011/03/lua_gc_5.html)
 
-******  
+##  new和delete操作详解
 
-## protobuffer 压缩算法  
-
-******  
-
-## lua 虚拟机  
-
-******  
-
-## lua和mono如何通讯
-
-******  
-
-##  TCP/UDP/可靠UDP  
-
-KCP 了解
-
-[可靠 UDP 传输](https://blog.codingnow.com/2016/03/reliable_udp.html#comments)
+[C++ 内存分配操作符new和delete详解](https://www.cnblogs.com/Philip-Tell-Truth/p/6567808.html)
 
 ******
