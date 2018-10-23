@@ -121,4 +121,8 @@ shared_ptr多个指针指向相同的对象。shared_ptr使用引用计数，每
 
 [C++ 内存分配操作符new和delete详解](https://www.cnblogs.com/Philip-Tell-Truth/p/6567808.html)
 
+****** 
+
+## define 和 const的区别
+
 ******

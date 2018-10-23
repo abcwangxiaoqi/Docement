@@ -116,7 +116,7 @@ IEnumerable 只是表明某个对象能够被枚举，真正的工作是由IEnum
 
 ******  
 
-## 多线程  
+## 多线程  
 
 **锁**
 
@@ -128,4 +128,27 @@ IEnumerable 只是表明某个对象能够被枚举，真正的工作是由IEnum
 
 **发生死锁怎么解锁**  
 
+******  
+
+## struct 和 class 区别
+
+[C#详解struct和class的区别](https://blog.csdn.net/qiaoquan3/article/details/51234208)
+
+******  
+
+## override重写 和 overload重载 区别
+
+[C# 重载（overload）与重写(override)](https://blog.csdn.net/yl2isoft/article/details/16369291)
+
+******  
+
+## const 和 readonly 区别
+
+const 静态常量
+readonly 动态常量
+
+**静态常量（Const）**是指编译器在编译时候会对常量进行解析，并将常量的值替换成初始化的那个值。
+**动态常量（Readonly）**的值则是在运行的那一刻才获得的，编译器编译期间将其标示为只读常量，而不用常量的值代替，**这样动态常量不必在声明的时候就初始化，而可以延迟到构造函数中初始化。** 
+
+[C#基本知识点-Readonly和Const的区别](https://www.cnblogs.com/daidaibao/p/4214268.html)
 ******
