@@ -125,4 +125,16 @@ shared_ptr多个指针指向相同的对象。shared_ptr使用引用计数，每
 
 ## define 和 const的区别
 
+******  
+
+## 对象内存分配 
+
+[C++对象内存分布（包括字节对齐和虚函数表）](https://blog.csdn.net/zhaopengnju/article/details/51570747)
+
+******
+
+## 书籍推荐 
+
+深度探索C++ 对象模型
+
 ******
