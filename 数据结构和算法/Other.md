@@ -255,4 +255,4 @@ node* reverseList(node* H)
 [贝塞尔曲线](https://blog.csdn.net/xiexian1204/article/details/49592765)  
 [贝塞尔曲线初探](http://www.cnblogs.com/jay-dong/archive/2012/09/26/2704188.html)
 
-******  
+******
