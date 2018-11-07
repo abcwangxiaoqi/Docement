@@ -42,5 +42,45 @@ EditorApplication.playmodeStateChanged, and EditorApplication.hierarchyWindowCha
 
 **设想一个男性角色有10套服装用来更换，而公用的骨骼是一套，因此在打包时仍然将这一套骨骼单独打包，然后再将其他所有的模型打包，一句话总结就是，一套骨骼对应N个模型，这N个模型都公用这一套骨骼，换装的实现实际上就是将相应的身体部分进行更换，比如要换一个手臂  则将新的手臂与身体上除了手臂以外的模型再进行一次网格合并，换句话说  要更换身体某一个部位，实际上就是更新了整个角色模型**
 
+****** 
+
+## 怎么防止特效 穿透 UI 
+
+order layer
+
+****** 
+
+## MSAA SMAA FXAA 
+
+**MSAA**还原度很高，但是费硬件。
+
+**SMAA**是性耗比最佳的模式，用适量的资源得到比较满意的消除狗牙效果。  
+
+[SMAA算法详解](https://blog.csdn.net/qezcwx11/article/details/78426052)
+
+**FXAA**耗费最低，低配置开这种抗锯齿不卡，实际上是一种粗糙的模糊化处理。
+
+******  
+
+## IOS 和 Android 图片压缩格式
+
+****** 
+
+## IOS 渲染方面所做的优化
+
+******  
+
+#  粒子特效优化 
+
+****** 
+
+# 骨骼动画
+
+[骨骼动画优化](http://liweizhaolili.blog.163.com/blog/static/162307442018211103921836)  
+
+[[Unity 3D] Unity 3D 性能优化-粒子优化](https://blog.csdn.net/jiexuan357/article/details/52911385)
+
+**骨骼动画原理**
+
 ******
 
