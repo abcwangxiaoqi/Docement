@@ -84,3 +84,9 @@ order layer
 
 ******
 
+
+# Linear 和 gammar 空间 
+
+[聊聊Unity的Gamma校正以及线性工作流](https://www.cnblogs.com/murongxiaopifu/p/9001314.html)
+
+******
