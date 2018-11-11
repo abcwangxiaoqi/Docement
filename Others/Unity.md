@@ -89,4 +89,22 @@ order layer
 
 [聊聊Unity的Gamma校正以及线性工作流](https://www.cnblogs.com/murongxiaopifu/p/9001314.html)
 
+******  
+
+
+# 搜狐畅游 preparations 
+
+1、缓存组建开发完成 
+2、update 策略组建开发完成 
+timer
+frametimer
+创建队列
+销毁队列
+
+3、shader 
+4、特效优化 
+5、同步组件化
+6、loader组件化
+7、熟悉lua--重要
+
 ******
