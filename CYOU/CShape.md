@@ -92,7 +92,7 @@ finally
 
 [C#中IDisposable的用法](https://www.cnblogs.com/tiancai/p/6612444.html)
 
-### Strunt怎么判断null呢
+### Struct怎么判断null呢
 
 首先值类型不可能为null，那我们怎么可以像判断class一样判断为空呢
 
