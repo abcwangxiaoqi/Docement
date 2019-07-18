@@ -2,13 +2,14 @@
 ## Unity
 
 
-### Awake和Start
-Awake实在实例化GameObject的时候调用
-Start是在实例化GameObject后的下一帧调用
+### Awake、OnEnable、Start
+
+**Awake**在实例化GameObject的时候调用，紧接着调用**OnEnable**，并在下一帧调用**Start**
+
 例如
 ```
     GameObject go = UnityEngine.Object.Instantiate(prefab) as GameObject;
-    Debug.Log("这里会调用Awake");
+    Debug.Log("这里会调用Awake 和 OnEnable");
     yield return 0;
     Debug.Log("这里会调用Start");
 ```
@@ -438,6 +439,32 @@ Matrix4x4 _vpInverse = _vp.inverse;
 Vector3 _NDCPos = _vp.MultiplyPoint(target.position);
 return _NDCPos.z;
 ```
+<br/>
+
+## 大量 Update 为什么效率低
+
+[10000 Update() calls](https://blogs.unity3d.com/2015/12/23/1k-update-calls/)
+
+**为什么？**
+
+1. **Iterate over all Behaviours**
+Unity goes over all Behaviours to update them. Special iterator class, SafeIterator, ensures that nothing breaks if someone decides to delete the next item on the list. Just iterating over all registered Behaviours takes 1517ms out of total 9979ms.
+
+<br/>
+
+2. **Check if the call is valid**
+Next, Unity does a bunch of checks to **make sure that it is calling a valid existing method on an active GameObject which has been initialized and its Start method called.** You don’t want your game to crash if you destroy a GameObject during Update, do you? These checks take another 2188ms out of total 9979ms.
+
+<br/>
+
+3. **Prepare to invoke the method**
+Unity creates an instance of ScriptingInvocationNoArgs (which represents a call from native side to managed side) together with ScriptingArguments and orders IL2CPP virtual machine to invoke the method (scripting_method_invoke function). This step takes 2061ms out of total 9979ms.
+
+<br/>
+
+
+**解决方法：** 自己封装UpdateManager，将其他GameObject的Update注册到UpdateManager里面去。
+
 <br/>
 
 ******
