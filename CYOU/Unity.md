@@ -60,6 +60,21 @@ CPU Skinning 是在PostLateUpdate之后执行的，PostLateUpdate是在LateUpdat
 
 ## 性能优化
 
+### Mono GC
+
+[Mono GC](https://www.jianshu.com/p/0284ca9a2257)
+
+Mono内存分为两部分，已用内存（used）和堆内存（heap），已用内存指的是mono实际需要使用的内存，堆内存指的是mono向操作系统申请的内存，两者的差值就是mono的空闲内存。当mono需要分配内存时，会先查看空闲内存是否足够，如果足够的话，直接在空闲内存中分配，否则mono会进行一次GC以释放更多的空闲内存，如果GC之后仍然没有足够的空闲内存，则mono会向操作系统申请内存，并扩充堆内存
+
++ GC方式：标记清除，类似于lua
+
+<r/>
+
++ GC本身是比较耗时的操作，而且由于GC会暂停那些需要mono内存分配的线程（C#代码创建的线程和主线程），因此无论是否在主线程中调用，GC都会导致游戏一定程度的卡顿，需要谨慎处理。另外，GC释放的内存只会留给mono使用，并不会交还给操作系统，因此mono堆内存是只增不减的。
+ 
+
+<br/>
+
 ### UMA
 
 [UMA:Unity性能优化大集合](https://blog.uwa4d.com/archives/allinone.html)
